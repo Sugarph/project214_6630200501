@@ -9,33 +9,83 @@
       />
       <div class="section-inner">
         <h4>Welcome</h4>
-        <h2>
-          Hi, I'm
-          <typewriter-text
-            :words="['Phoorinut Hochuei', 'Sugar', 'ภูริณัฐ โห้เฉื่อย']"
-            :start-on-view="true"
-            :use-scramble="true"
-          />
-        </h2>
+        <button
+          v-if="!isEditMode"
+          @click="toggleEditMode"
+          class="edit-toggle-btn"
+        >
+          Edit Profile
+        </button>
 
-        <!-- Replace the static text with these animated elements -->
-        <div class="student-info">
-          <div class="student-badge fade-in">
-            <span class="badge-label">Section</span>
-            <span class="badge-value">S05</span>
-          </div>
-          <div class="student-badge fade-in">
-            <span class="badge-label">ID</span>
-            <span class="badge-value">6630200501</span>
+        <div v-if="!isEditMode">
+          <h2>
+            Hi, I'm
+            <typewriter-text
+              :words="[
+                userProfile.name.en,
+                userProfile.penName,
+                userProfile.name.th,
+              ]"
+              :start-on-view="true"
+              :use-scramble="true"
+            />
+          </h2>
+
+          <div class="student-info">
+            <div class="student-badge fade-in">
+              <span class="badge-label">Section</span>
+              <span class="badge-value">{{ userProfile.section }}</span>
+            </div>
+            <div class="student-badge fade-in">
+              <span class="badge-label">ID</span>
+              <span class="badge-value">{{ userProfile.studentId }}</span>
+            </div>
           </div>
         </div>
 
-        <animated-button tag="router-link" to="/profile" class="fade-in">
+        <div v-else class="edit-form">
+          <div class="form-group">
+            <label>English Name</label>
+            <input v-model="editableProfile.name.en" type="text" />
+          </div>
+
+          <div class="form-group">
+            <label>Thai Name</label>
+            <input v-model="editableProfile.name.th" type="text" />
+          </div>
+
+          <div class="form-group">
+            <label>Pen Name</label>
+            <input v-model="editableProfile.penName" type="text" />
+          </div>
+
+          <div class="form-group">
+            <label>Student ID</label>
+            <input v-model="editableProfile.studentId" type="text" />
+          </div>
+
+          <div class="form-group">
+            <label>Section</label>
+            <input v-model="editableProfile.section" type="text" />
+          </div>
+
+          <div class="form-actions">
+            <button @click="cancelEdit" class="cancel-btn">Cancel</button>
+            <button @click="saveChanges" class="save-btn">Save</button>
+          </div>
+        </div>
+
+        <animated-button
+          v-if="!isEditMode"
+          tag="router-link"
+          to="/profile"
+          class="fade-in"
+        >
           Learn More
         </animated-button>
       </div>
 
-      <scroll-arrow @click="scrollToNextSection" />
+      <scroll-arrow v-if="!isEditMode" @click="scrollToNextSection" />
     </section>
 
     <!-- Section 2 -->
@@ -98,7 +148,25 @@ export default {
   data() {
     return {
       backgroundImages: [kus1, kus2, kus3],
+      userProfile: {
+        name: {
+          en: "Phoorinut Hochuei",
+          th: "ภูริณัฐ โห้เฉื่อย",
+        },
+        penName: "Sugar",
+        studentId: "6630200501",
+        section: "S05",
+      },
+      isEditMode: false,
+      editableProfile: null,
+      isLoading: false,
     };
+  },
+  created() {
+    this.resetEditableProfile();
+
+    // Load profile from DB
+    this.loadProfileFromDB();
   },
   mounted() {
     const observerOptions = {
@@ -117,17 +185,93 @@ export default {
       });
     }, observerOptions);
 
-    // Update selector to be more specific
     document
       .querySelectorAll(
-        ".section-inner h4, .section-inner h2, .section-inner p, .animated-btn.fade-in, .student-badge.fade-in",
-        
+        ".section-inner h4, .section-inner h2, .section-inner p, .animated-btn.fade-in, .student-badge.fade-in"
       )
       .forEach((element) => {
         observer.observe(element);
       });
   },
   methods: {
+    async loadProfileFromDB() {
+      try {
+        this.isLoading = true;
+        const response = await fetch("http://localhost:3000/profile");
+
+        if (response.ok) {
+          const profile = await response.json();
+          this.userProfile = profile;
+          this.resetEditableProfile();
+        } else {
+          await this.saveProfileToDB();
+        }
+      } catch (error) {
+        console.error("Failed to load profile:", error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    async saveProfileToDB() {
+      try {
+        const checkResponse = await fetch("http://localhost:3000/profile");
+
+        if (checkResponse.ok) {
+          // Update existing profile
+          await fetch("http://localhost:3000/profile", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(this.userProfile),
+          });
+        } else {
+          await fetch("http://localhost:3000/profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(this.userProfile),
+          });
+        }
+
+        console.log("Profile saved to db.json");
+      } catch (error) {
+        console.error("Failed to save profile to db.json:", error);
+      }
+    },
+
+    toggleEditMode() {
+      if (this.isEditMode) {
+        // Save changes
+        this.userProfile = JSON.parse(JSON.stringify(this.editableProfile));
+        this.saveProfile();
+      }
+      this.isEditMode = !this.isEditMode;
+    },
+
+    resetEditableProfile() {
+      this.editableProfile = JSON.parse(JSON.stringify(this.userProfile));
+    },
+
+    cancelEdit() {
+      this.resetEditableProfile();
+      this.isEditMode = false;
+    },
+
+    saveProfile() {
+      this.saveProfileToDB();
+    },
+
+    saveChanges() {
+      // Save changes
+      this.userProfile = JSON.parse(JSON.stringify(this.editableProfile));
+      this.saveProfile();
+      this.isEditMode = false;
+    },
+
+    updateProfile(newProfile) {
+      this.userProfile = { ...this.userProfile, ...newProfile };
+      this.saveProfile();
+    },
+
     scrollToNextSection() {
       const currentSection = this.$el
         .querySelector(":hover")
@@ -282,6 +426,97 @@ section {
   font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: 1px;
+}
+
+.edit-toggle-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 100000; 
+  font-size: 0.9rem;
+  opacity: 1; 
+}
+
+.edit-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.edit-form {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between; 
+  margin-top: 1.5rem;
+  gap: 10px;
+}
+
+.cancel-btn {
+  background: rgba(255, 100, 100, 0.2);
+  border: 1px solid rgba(255, 100, 100, 0.5);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1; 
+}
+
+.save-btn {
+  background: rgba(76, 175, 80, 0.2);
+  border: 1px solid rgba(76, 175, 80, 0.5);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.cancel-btn:hover {
+  background: rgba(255, 100, 100, 0.3);
+  transform: translateY(-2px);
+}
+
+.save-btn:hover {
+  background: rgba(76, 175, 80, 0.3);
+  transform: translateY(-2px);
 }
 
 @keyframes fadeIn {
