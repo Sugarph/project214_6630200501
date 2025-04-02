@@ -1,0 +1,209 @@
+{
+  "courses": [
+    {
+      "id": "b242",
+      "code": "01355209",
+      "name": "Communicative English for Careers",
+      "credits": 3,
+      "grade": "A",
+      "year": 1,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "42a7",
+      "code": "03751112",
+      "name": "Social and Politics",
+      "credits": 3,
+      "grade": "B",
+      "year": 1,
+      "gradeColor": "#bef264"
+    },
+    {
+      "id": "772e",
+      "code": "01999111",
+      "name": "Knowledge of the Land",
+      "credits": 2,
+      "grade": "A",
+      "year": 1,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "8e13",
+      "code": "01418111",
+      "name": "Introduction to Computer Science",
+      "credits": 2,
+      "grade": "B",
+      "year": 1,
+      "gradeColor": "#bef264"
+    },
+    {
+      "id": "0179",
+      "code": "01418112",
+      "name": "Fundamental Programming Concepts",
+      "credits": 3,
+      "grade": "A",
+      "year": 1,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "9aec",
+      "code": "01417111",
+      "name": "Calculus I",
+      "credits": 3,
+      "grade": "D",
+      "year": 1,
+      "gradeColor": "#dc2626"
+    },
+    {
+      "id": "591e",
+      "code": "01418141",
+      "name": "Intellectual Properties and Professional Ethics",
+      "credits": 3,
+      "grade": "B",
+      "year": 1,
+      "gradeColor": "#bef264"
+    },
+    {
+      "id": "8744",
+      "code": "01999021",
+      "name": "Thai Language for Communication",
+      "credits": 3,
+      "grade": "B",
+      "year": 1,
+      "gradeColor": "#bef264"
+    },
+    {
+      "id": "528a",
+      "code": "01355109",
+      "name": "Essential English Listening-Speaking Skills",
+      "credits": 3,
+      "grade": "A",
+      "year": 1,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "166f",
+      "code": "01175151",
+      "name": "Martial Art with Thai Sword",
+      "credits": 1,
+      "grade": "B",
+      "year": 1,
+      "gradeColor": "#bef264"
+    },
+    {
+      "id": "c1d5",
+      "code": "03654111",
+      "name": "Aesthetics of Sport",
+      "credits": 3,
+      "grade": "A",
+      "year": 1,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "a57e",
+      "code": "01999041",
+      "name": "Economics for Better Living",
+      "credits": 3,
+      "grade": "C+",
+      "year": 1,
+      "gradeColor": "#fbbf24"
+    },
+    {
+      "id": "0a0c",
+      "code": "01418132",
+      "name": "Fundamentals of Computing",
+      "credits": 3,
+      "grade": "C+",
+      "year": 1,
+      "gradeColor": "#fbbf24"
+    },
+    {
+      "id": "99dc",
+      "code": "01418131",
+      "name": "Statistical Programming",
+      "credits": 3,
+      "grade": "B",
+      "year": 1,
+      "gradeColor": "#bef264"
+    },
+    {
+      "id": "3087",
+      "code": "01418113",
+      "name": "Computer Programming",
+      "credits": 3,
+      "grade": "A",
+      "year": 1,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "06dc",
+      "code": "01417322",
+      "name": "Basic Linear Algebra",
+      "credits": 3,
+      "grade": "C+",
+      "year": 1,
+      "gradeColor": "#fbbf24"
+    },
+    {
+      "id": "fd1f",
+      "code": "01418361",
+      "name": "Introduction to Computer Vision",
+      "credits": 3,
+      "grade": "A",
+      "year": 2,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "ffcc",
+      "code": "01418233",
+      "name": "Computer Architecture",
+      "credits": 3,
+      "grade": "A",
+      "year": 2,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "533c",
+      "code": "01418231",
+      "name": "Data Structures and Algorithms",
+      "credits": 3,
+      "grade": "A",
+      "year": 2,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "c407",
+      "code": "01999012",
+      "name": "Health for Life",
+      "credits": 3,
+      "grade": "A",
+      "year": 2,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "2c77",
+      "code": "01174231",
+      "name": "Introduction to Recreation",
+      "credits": 2,
+      "grade": "A",
+      "year": 2,
+      "gradeColor": "#22c55e"
+    },
+    {
+      "id": "e3b0",
+      "code": "01418211",
+      "name": "Software Construction",
+      "credits": 3,
+      "grade": "A",
+      "year": 2,
+      "gradeColor": "#22c55e"
+    }
+  ],
+  "settings": {
+    "availableYears": [
+      1,
+      2
+    ],
+    "lastAddedYear": 3
+  }
+}
