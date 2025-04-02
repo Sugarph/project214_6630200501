@@ -7,7 +7,7 @@ This is Website for Practicum in Software Development course, I over done it a b
 - ชื่อ-นามสกุล รหัส สาขา ✅ At the home page, for code it in HomeView  
 - โรงเรียนเดิม ✅ Also at the home page, scroll down. The button redirect you to my old school website  
 - แก้ไขข้อมูลได้  
-  - ต้องมี Form สำหรับแก้ไข  ❌ oops forgot about this one
+  - ต้องมี Form สำหรับแก้ไข  ✅ Edit button for profile is at bottom right of the first section at home page
 
 ### แสดงรายละเอียดการเรียน
 - รหัสวิชา ชื่อวิชา หน่วยกิต เกรด ✅ At the profile page in card form, it in year card container. Course card met all the requirement. For code it in CourseCard.vue in component  
@@ -15,7 +15,7 @@ This is Website for Practicum in Software Development course, I over done it a b
 - ต้องมี Form สำหรับเพิ่มและแก้ไข ✅ and also in the card it self  
 
 ### การพัฒนา Application
-- ใช้ Vue.js ✅ all use vue but I set up the vue wrong a bit so there will be some ts element left in not effect the code, I not event use it.  
+- ใช้ Vue.js ✅ all use vue but I set up the vue wrong a bit so there will be some ts element left in not effect the code, I not even use it (ts).  
 - json-server (data/db.json) ✅ db.json in data, it contain course with all elemnt plus year and the setting for the year  
 
 - เอาไปไว้ที่ GitHub ของแต่ละคน ✅  
